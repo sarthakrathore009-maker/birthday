@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise For You</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Cute Font for Captions -->
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="image/passcode-bg.mp4.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+
+    <div class="content-container">
+
+        <!-- Page 1: Passcode -->
+        <div id="page-1" class="page active">
+            <h2 class="animate-text">Enter a passcode</h2>
+            <div id="passcode-display" class="animate-pop">_ _ _ _</div>
+            <div class="keypad animate-up">
+                <!-- Keys wahi purani rahengi -->
+                <button class="key" onclick="enterDigit(1)">1</button>
+                <button class="key" onclick="enterDigit(2)">2</button>
+                <button class="key" onclick="enterDigit(3)">3</button>
+                <button class="key" onclick="enterDigit(4)">4</button>
+                <button class="key" onclick="enterDigit(5)">5</button>
+                <button class="key" onclick="enterDigit(6)">6</button>
+                <button class="key" onclick="enterDigit(7)">7</button>
+                <button class="key" onclick="enterDigit(8)">8</button>
+                <button class="key" onclick="enterDigit(9)">9</button>
+                <button class="key" onclick="enterDigit('*')">*</button>
+                <button class="key" onclick="enterDigit(0)">0</button>
+                <button class="key" onclick="enterDigit('#')">#</button>
+            </div>
+        </div>
+
+        <!-- Page 2: Are you ready? -->
+        <div id="page-2" class="page">
+            <h2 class="animate-text-3d">Are you ready for a surprise?</h2>
+            <div class="btn-group">
+                <button class="cake-btn animate-pop" onclick="goToPage(3)">YES</button>
+                <button class="cake-btn animate-pop" id="no-btn" onmouseover="moveButton()">NO</button>
+            </div>
+        </div>
+
+        <!-- Page 3: Make a Wish (Cake) -->
+        <div id="page-3" class="page">
+            <h2 id="cake-title" class="animate-text">Make a wish ✨</h2>
+            <button class="cake-btn blow-btn animate-up" onclick="goToPage(4)">BLOW CANDLES</button>
+        </div>
+
+        <!-- Page 4: Scrollable Photo Gallery -->
+        <div id="page-4" class="page full-page">
+            <h2 class="animate-text-3d sticky-title">I MISS US</h2>
+
+            <div class="scroll-gallery">
+                <!-- Card 1 -->
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0003.jpg" alt="Memory">
+                    <p class="caption">Humari pehli mulakat ki sabse pyari yaad ❤️</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0004.jpg" alt="Memory">
+                    <p class="caption">Wo din jab tum bohot hasi thi 😂</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0005.jpg" alt="Memory">
+                    <p class="caption">Best trip ever! I wish to go back ✈️</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0006.jpg" alt="Memory">
+                    <p class="caption">Just looking cute as always 😍</p>
+                </div>
+                <!-- Card 5 -->
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0007.jpg" alt="Memory">
+                    <p class="caption">Forever mine, forever ours ♾️</p>
+                </div>
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0008.jpg" alt="Memory">
+                    <p class="caption">Forever mine, forever ours ♾️</p>
+                </div>
+               
+                <div class="photo-card hidden-card">
+                    <img src="image/IMG-20260501-WA0009.jpg" alt="Memory">
+                    <p class="caption">Forever mine, forever ours ♾️</p>
+                </div>
+               
+                <!-- Yahan tum aise hi aur 10-15 cards copy-paste kar sakte ho -->
+
+                <button class="cake-btn end-btn" onclick="goToExternalCakeSite()">Make a Virtual Cake 🎂</button>
+            </div>
+
+
+            <!-- Fake Loading Screen (Initially Hidden) -->
+            <div id="fake-loader"
+                style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #ffd1ff, #e0c3fc); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; color: #5a4b81; font-family: 'Poppins', sans-serif;">
+                <h1 style="font-size: 30px; margin-bottom: 20px; animation: pulse 1.5s infinite;">Baking your 3D Cake...
+                    🎂</h1>
+                <p style="font-size: 18px;">Please wait a moment ✨</p>
+            </div>
+
+            <!-- CSS For Loading Animation -->
+            <style>
+                @keyframes pulse {
+                    0% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+
+                    50% {
+                        transform: scale(1.1);
+                        opacity: 0.7;
+                    }
+
+                    100% {
+                        transform: scale(1);
+                        opacity: 1;
+                    }
+                }
+            </style>
+
+            <script src="script.js"></script>
+</body>
+
+</html>

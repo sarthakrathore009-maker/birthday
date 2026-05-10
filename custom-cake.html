@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My 3D Birthday Cake</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            overflow: hidden; 
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); /* Premium Pastel Background */
+        }
+        
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
+
+        /* Premium Glassmorphism UI Panel */
+        #ui-panel {
+            position: absolute; top: 20px; left: 20px; z-index: 10;
+            width: 350px; max-height: 90vh; overflow-y: auto;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px; padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* Scrollbar Hide for UI */
+        #ui-panel::-webkit-scrollbar { display: none; }
+        
+        h2 { color: #5a4b81; text-align: center; font-size: 28px; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); }
+
+        .section-title { font-size: 16px; color: #444; margin: 15px 0 10px 0; font-weight: 600; }
+
+        /* Grid for Buttons */
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .btn-grid-small { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+        /* Styling the Buttons */
+        button {
+            padding: 12px; background: rgba(255, 255, 255, 0.6);
+            border: 2px solid transparent; border-radius: 15px;
+            font-family: 'Fredoka', sans-serif; font-weight: 600; color: #555;
+            cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        button:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        button.active { border-color: #a6c1ee; background: white; color: #764ba2; }
+
+        /* Color Swatches */
+        .color-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        .color-btn {
+            width: 45px; height: 45px; border-radius: 50%; border: 3px solid white;
+            cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .color-btn:hover { transform: scale(1.15); }
+
+        #loading {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 24px; color: #fff; font-weight: bold; z-index: 20;
+            background: rgba(0,0,0,0.5); padding: 15px 30px; border-radius: 20px;
+            display: none; pointer-events: none; backdrop-filter: blur(5px);
+        }
+    </style>
+
+    <!-- Three.js Setup -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="loading">Baking... 🎂</div>
+
+    <div id="ui-panel">
+        <h2>Personalize</h2>
+        
+        <!-- Shape Selection -->
+        <div class="section-title">1. Cake Shape</div>
+        <div class="btn-grid" id="shape-options">
+            <button class="active" onclick="loadItem('cake', 'img/cake_layer_3_v2.glb', this)">3 Tiers</button>
+            <button onclick="loadItem('cake', 'img/cake_layer_2_v1.glb', this)">2 Tiers</button>
+            <button onclick="loadItem('cake', 'img/cake_layer_1_v1.glb', this)">1 Tier</button>
+            <button onclick="loadItem('cake', 'img/heart_cake.glb', this)">Heart Cake</button>
+            <button onclick="loadItem('cake', 'img/cake_weading_v2.glb', this)">Wedding</button>
+        </div>
+
+        <!-- Frosting Color -->
+        <div class="section-title">2. Frosting Color</div>
+        <div class="color-grid">
+            <div class="color-btn" style="background: #ffffff;" onclick="changeCakeColor(0xffffff)"></div> <!-- White -->
+            <div class="color-btn" style="background: #4a2f24;" onclick="changeCakeColor(0x4a2f24)"></div> <!-- Chocolate -->
+            <div class="color-btn" style="background: #ffb6c1;" onclick="changeCakeColor(0xffb6c1)"></div> <!-- Pink -->
+            <div class="color-btn" style="background: #98fb98;" onclick="changeCakeColor(0x98fb98)"></div> <!-- Mint -->
+            <div class="color-btn" style="background: #ffd700;" onclick="changeCakeColor(0xffd700)"></div> <!-- Gold -->
+        </div>
+
+        <!-- Toppings -->
+        <div class="section-title">3. Toppings</div>
+        <div class="btn-grid" id="topping-options">
+            <button onclick="loadItem('topping', 'img/cake_layer_3_berries_v1.glb', this)">Berries</button>
+            <button onclick="loadItem('topping', 'img/cake_flowers_flowers_v1.glb', this)">Flowers</button>
+            <button onclick="loadItem('topping', 'img/heart_cake_decoration_1.glb', this)">Heart Deco</button>
+            <button onclick="loadItem('topping', 'img/cake_layer_3_chocolate_and_gifts_v2.glb', this)">Chocolate/Gifts</button>
+            <button onclick="clearGroup(groups.topping); removeActive('topping-options')">Remove</button>
+        </div>
+
+        <!-- Number Candles -->
+        <div class="section-title">4. Number Candle</div>
+        <div class="btn-grid-small" id="candle-options">
+            <button onclick="loadItem('candle', 'img/candle_0.glb', this)">0</button>
+            <button onclick="loadItem('candle', 'img/candle_1.glb', this)">1</button>
+            <button onclick="loadItem('candle', 'img/candle_2.glb', this)">2</button>
+            <button onclick="loadItem('candle', 'img/candle_3.glb', this)">3</button>
+            <button onclick="loadItem('candle', 'img/candle_4.glb', this)">4</button>
+            <button onclick="loadItem('candle', 'img/candle_5.glb', this)">5</button>
+            <button onclick="loadItem('candle', 'img/candle_6.glb', this)">6</button>
+            <button onclick="loadItem('candle', 'img/candle_7.glb', this)">7</button>
+            <button onclick="loadItem('candle', 'img/candle_8.glb', this)">8</button>
+            <button onclick="loadItem('candle', 'img/candle_9.glb', this)">9</button>
+        </div>
+        <button style="width: 100%; margin-top: 10px;" onclick="clearGroup(groups.candle); removeActive('candle-options')">Remove Candle</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        // 1. Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        // Camera setup for best viewing angle
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 3, 7); 
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Softer realistic shadows
+        container.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.minDistance = 3;
+        controls.maxDistance = 12;
+        controls.target.set(0, 0.5, 0); // Focus slightly above the base
+
+        // 2. Lighting (Crucial for 3D realism)
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        dirLight.position.set(5, 10, 7);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        scene.add(dirLight);
+
+        const backLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        backLight.position.set(-5, 5, -5);
+        scene.add(backLight);
+
+        // 3. Groups Setup (Smart way to handle multiple models)
+        // Groups allow us to easily replace the cake without deleting the table, etc.
+        window.groups = {
+            table: new THREE.Group(),
+            cake: new THREE.Group(),
+            topping: new THREE.Group(),
+            candle: new THREE.Group()
+        };
+        
+        scene.add(groups.table);
+        scene.add(groups.cake);
+        scene.add(groups.topping);
+        scene.add(groups.candle);
+
+        const loader = new GLTFLoader();
+        const loadingUI = document.getElementById('loading');
+
+        // Helper function to clear a group before adding a new model
+        window.clearGroup = function(group) {
+            while(group.children.length > 0) { 
+                group.remove(group.children[0]); 
+            }
+        };
+
+        // UI Helper for active buttons
+        window.removeActive = function(containerId) {
+            document.querySelectorAll(`#${containerId} button`).forEach(b => b.classList.remove('active'));
+        };
+
+        // 4. Main Function to Load Any Item
+        window.loadItem = function(type, filePath, btnElement = null) {
+            loadingUI.style.display = 'block';
+
+            // Highlight active button
+            if (btnElement) {
+                removeActive(`${type}-options`);
+                btnElement.classList.add('active');
+            }
+
+            // Clear the specific group (e.g., remove old cake before adding new cake)
+            const targetGroup = groups[type];
+            clearGroup(targetGroup);
+
+            loader.load(filePath, (gltf) => {
+                const model = gltf.scene;
+                
+                // Enable shadows for the loaded model
+                model.traverse((node) => {
+                    if (node.isMesh) {
+                        node.castShadow = true;
+                        node.receiveShadow = true;
+                    }
+                });
+
+                // Smooth spawn animation
+                model.scale.set(0, 0, 0);
+                targetGroup.add(model);
+
+                // Simple animation to scale it up
+                let scale = 0;
+                function popIn() {
+                    scale += 0.08;
+                    if(scale <= 1) {
+                        model.scale.set(scale, scale, scale);
+                        requestAnimationFrame(popIn);
+                    } else {
+                        model.scale.set(1, 1, 1);
+                    }
+                }
+                popIn();
+
+                loadingUI.style.display = 'none';
+            }, undefined, (error) => {
+                console.error(`Error loading ${filePath}:`, error);
+                loadingUI.innerText = "Error loading model!";
+                setTimeout(() => { loadingUI.style.display = 'none'; loadingUI.innerText = "Baking... 🎂"; }, 2000);
+            });
+        };
+
+        // 5. Function to Change Color
+        window.changeCakeColor = function(hexColor) {
+            // Apply color only to the cake group
+            groups.cake.traverse((node) => {
+                if (node.isMesh && node.material) {
+                    // Clone material so we don't accidentally color everything sharing the material
+                    node.material = node.material.clone();
+                    node.material.color.setHex(hexColor);
+                }
+            });
+        };
+
+        // 6. Initial Load Sequence
+        // Note: Paths must match your folder structure exactly
+        loadItem('table', 'img/table_v2.glb'); // Load the static table
+        loadItem('cake', 'img/cake_layer_3_v2.glb'); // Load default cake
+
+        // 7. Render Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

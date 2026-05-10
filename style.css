@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow: hidden; 
+}
+
+/* Background Video */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+    transition: opacity 0.5s ease;
+}
+.video-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: -1;
+}
+
+.content-container {
+    position: relative; z-index: 1;
+    height: 100vh; width: 100vw;
+    display: flex; justify-content: center; align-items: center;
+    text-align: center;
+}
+
+/* ---- BHENKAR TEXT ANIMATIONS ---- */
+h2 {
+    font-size: 40px; margin-bottom: 20px;
+    text-shadow: 2px 5px 15px rgba(0,0,0,0.6);
+}
+
+.animate-text {
+    animation: slideInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.animate-text-3d {
+    animation: rotateIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+.animate-pop {
+    animation: popIn 0.8s ease-out forwards;
+}
+.animate-up {
+    animation: slideInUp 1s ease 0.3s forwards; /* 0.3s delay */
+    opacity: 0;
+}
+
+@keyframes slideInUp {
+    0% { opacity: 0; transform: translateY(60px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes rotateIn {
+    0% { opacity: 0; transform: translateY(-50px) rotateX(90deg); }
+    100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    60% { transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---- THE CAKE EFFECT BUTTONS ---- */
+.cake-btn {
+    background: linear-gradient(145deg, #ffb6c1, #ff99cc); /* Strawberry Frosting */
+    border: 4px solid #fff;
+    border-radius: 40px;
+    color: #b30047;
+    font-size: 22px;
+    font-weight: 900;
+    padding: 15px 45px;
+    margin: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    /* 3D Cake Base Shadow */
+    box-shadow: 0 10px 0 #ff6699, 0 15px 20px rgba(0,0,0,0.4);
+    transition: all 0.15s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cake-btn:active {
+    transform: translateY(10px); /* Button dabne par neeche jayega */
+    box-shadow: 0 0px 0 #ff6699, 0 5px 10px rgba(0,0,0,0.4); /* Shadow kam hogi */
+}
+
+/* ---- KEYPAD STYLES ---- */
+.keypad { display: grid; grid-template-columns: repeat(3, 70px); gap: 15px; justify-content: center; }
+.key {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4);
+    color: white; font-size: 26px; backdrop-filter: blur(8px); cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s;
+}
+.key:active { transform: scale(0.9); }
+#passcode-display { font-size: 40px; letter-spacing: 15px; margin-bottom: 30px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+
+/* ---- SCROLLABLE GALLERY STYLES ---- */
+.full-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+.sticky-title { margin-top: 30px; position: sticky; top: 20px; z-index: 10; }
+
+.scroll-gallery {
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Scrollbar hide karne ke liye */
+    -ms-overflow-style: none; scrollbar-width: none; 
+}
+.scroll-gallery::-webkit-scrollbar { display: none; }
+
+/* Polaroid Card Effect */
+.photo-card {
+    background: white;
+    padding: 15px 15px 25px 15px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    /* Hidden state for animation */
+    opacity: 0;
+    transform: translateY(80px) rotate(-5deg) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.photo-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Card Caption Handwritten Style */
+.caption {
+    color: #222;
+    font-family: 'Kalam', cursive; /* Handwritten font applied */
+    font-size: 24px;
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+/* When Javascript triggers the card into view */
+.photo-card.show {
+    opacity: 1;
+    transform: translateY(0) rotate(2deg) scale(1);
+}
+
+/* Har alternate card ko alag angle dena taaki real lage */
+.photo-card:nth-child(even).show {
+    transform: translateY(0) rotate(-3deg) scale(1);
+}
+
+/* Page Hiding Logic */
+.page { display: none; }
+.active { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    h2 {
+        font-size: 28px;
+        padding: 0 15px;
+    }
+    .cake-btn {
+        font-size: 18px;
+        padding: 12px 30px;
+    }
+}
