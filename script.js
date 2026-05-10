@@ -6,7 +6,8 @@ const pageVideos = {
     1: "image/passcode-bg.mp4.mp4",
     2: "image/surprise-bg.mp4.mp4",
     3: "image/cake-bg.mp4.mp4",
-    4: "image/love-bg.mp4.mp4"
+    4: "image/love-bg.mp4.mp4",
+    5: "image/hbd-bg.mp4"
 };
 
 function enterDigit(digit) {

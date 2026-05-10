@@ -16,6 +16,11 @@
     <video id="bg-video" autoplay loop muted playsinline>
         <source src="image/passcode-bg.mp4.mp4" type="video/mp4">
     </video>
+    <!-- Quiz Background Video (Apni video ko rename karke image folder me quiz-bg.mp4 naam se rakhein) -->
+    <video id="quiz-video" loop muted playsinline
+        style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2;">
+        <source src="image/quiz-bg.mp4" type="video/mp4">
+    </video>
     <div class="video-overlay"></div>
 
     <div class="content-container">
@@ -45,8 +50,61 @@
         <div id="page-2" class="page">
             <h2 class="animate-text-3d">Are you ready for a surprise?</h2>
             <div class="btn-group">
-                <button class="cake-btn animate-pop" onclick="goToPage(3)">YES</button>
+                <button class="cake-btn animate-pop" onclick="startQuiz()">YES</button>
                 <button class="cake-btn animate-pop" id="no-btn" onmouseover="moveButton()">NO</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page 1 -->
+        <div id="page-quiz-1" class="page">
+            <div class="quiz-card animate-pop">
+                <h2>1. Hum dono kis type ki couple vibe dete hain?</h2>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-2')">A) Cute & peaceful</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-2')">B) Funny & chaotic</button>
+                <button class="quiz-option" onclick="checkAnswer(true, 'quiz-2')">C) Romantic & filmy ✨</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-2')">D) Bestfriends wali vibe</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page 2 -->
+        <div id="page-quiz-2" class="page">
+            <div class="quiz-card animate-pop">
+                <h2>2. Meri kaunsi habit tumhe sabse zyada pasand hai?</h2>
+                <button class="quiz-option" onclick="checkAnswer(true, 'quiz-3')">A) Caring nature ❤️</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-3')">B) Jealous hona</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-3')">C) Random funny talks</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-3')">D) Attention dena</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page 3 -->
+        <div id="page-quiz-3" class="page">
+            <div class="quiz-card animate-pop">
+                <h2>3. Agar hum date pe jayein to perfect plan kya hoga?</h2>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-4')">A) Long drive + music</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-4')">B) Movie + food</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-4')">C) Rooftop dinner</button>
+                <button class="quiz-option" onclick="checkAnswer(true, 'quiz-4')">D) Bas saath time spend karna anywhere
+                    ❤️</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page 4 -->
+        <div id="page-quiz-4" class="page">
+            <div class="quiz-card animate-pop">
+                <h2>4. Humari relationship me sabse strong cheez kya hai?</h2>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-5')">A) Trust</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-5')">B) Love</button>
+                <button class="quiz-option" onclick="checkAnswer(false, 'quiz-5')">C) Understanding</button>
+                <button class="quiz-option" onclick="checkAnswer(true, 'quiz-5')">D) All of the above ❤️</button>
+            </div>
+        </div>
+
+        <!-- Quiz Page 5 -->
+        <div id="page-quiz-5" class="page">
+            <div class="quiz-card animate-pop">
+                <h2>5. Final surprise </h2>
+                <button class="quiz-option" onclick="endQuiz()">🎉</button>
             </div>
         </div>
 
@@ -90,47 +148,88 @@
                     <img src="image/IMG-20260501-WA0008.jpg" alt="Memory">
                     <p class="caption">Forever mine, forever ours ♾️</p>
                 </div>
-               
+
                 <div class="photo-card hidden-card">
                     <img src="image/IMG-20260501-WA0009.jpg" alt="Memory">
                     <p class="caption">Forever mine, forever ours ♾️</p>
                 </div>
-               
-                <!-- Yahan tum aise hi aur 10-15 cards copy-paste kar sakte ho -->
 
-                <button class="cake-btn end-btn" onclick="goToExternalCakeSite()">Make a Virtual Cake 🎂</button>
+
+
+
+
+
+                <button class="cake-btn end-btn" onclick="goToPage(5)">Next Surprise ✨</button>
+            </div>
+        </div>
+        <div id="page-5" class="page">
+            <div class="hbd-container">
+                <h1 class="hbd-title animate-zoom-fade">Happy Birthday</h1>
+                <p class="hbd-paragraph animate-up">
+                    To the most beautiful soul who makes every day brighter. ❤️<br>
+                    May your year be filled with as much happiness, love, and <br>
+                    peace as you bring into my life every single day.
+                </p>
             </div>
 
+            <button class="cake-btn animate-pop" style="margin-top: 40px;" onclick="goToExternalCakeSite()">Make a
+                Virtual Cake 🎂</button>
+        </div>
 
-            <!-- Fake Loading Screen (Initially Hidden) -->
-            <div id="fake-loader"
-                style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #ffd1ff, #e0c3fc); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; color: #5a4b81; font-family: 'Poppins', sans-serif;">
-                <h1 style="font-size: 30px; margin-bottom: 20px; animation: pulse 1.5s infinite;">Baking your 3D Cake...
-                    🎂</h1>
-                <p style="font-size: 18px;">Please wait a moment ✨</p>
-            </div>
+    </div>
 
-            <!-- CSS For Loading Animation -->
-            <style>
-                @keyframes pulse {
-                    0% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
+        <!-- Fake Loading Screen (Initially Hidden) -->
+        <div id="fake-loader"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #ffd1ff, #e0c3fc); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; color: #5a4b81; font-family: 'Poppins', sans-serif;">
+            <h1 style="font-size: 30px; margin-bottom: 20px; animation: pulse 1.5s infinite;">Baking your 3D Cake...
+                🎂</h1>
+            <p style="font-size: 18px;">Please wait a moment ✨</p>
+        </div>
 
-                    50% {
-                        transform: scale(1.1);
-                        opacity: 0.7;
-                    }
-
-                    100% {
-                        transform: scale(1);
-                        opacity: 1;
-                    }
+        <!-- CSS For Loading Animation -->
+        <style>
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
                 }
-            </style>
 
-            <script src="script.js"></script>
+                50% {
+                    transform: scale(1.1);
+                    opacity: 0.7;
+                }
+
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+
+        <script src="script.js"></script>
+        <script>
+            // Quiz control logic
+            function startQuiz() {
+                document.getElementById('bg-video').style.display = 'none';
+                document.getElementById('quiz-video').style.display = 'block';
+                document.getElementById('quiz-video').play();
+                goToPage('quiz-1');
+            }
+            function endQuiz() {
+                document.getElementById('quiz-video').style.display = 'none';
+                document.getElementById('bg-video').style.display = 'block';
+                goToPage(3);
+            }
+            function checkAnswer(isCorrect, nextPage) {
+                if (isCorrect) {
+                    goToPage(nextPage);
+                } else {
+                    const funnyMessages = ["Galat jawab! Kya yar babu!", "Lagta hai badam khilana padega... 🙄", "breakup karna hai kya? 🤔"];
+                    const randomMsg = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+                    alert(randomMsg);
+                }
+            }
+        </script>
 </body>
 
 </html>

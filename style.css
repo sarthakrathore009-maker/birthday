@@ -162,9 +162,127 @@ h2 {
     transform: translateY(0) rotate(-3deg) scale(1);
 }
 
+/* ---- QUIZ STYLES ---- */
+.quiz-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 30px;
+    border: 3px solid white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.quiz-option {
+    background: white;
+    color: #b30047;
+    border: none;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.quiz-option:hover {
+    background: #ffb6c1;
+    transform: scale(1.05);
+}
+
+/* ---- PREMIUM QUIZ STYLES ---- */
+.quiz-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px 30px;
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.quiz-card h2 {
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #fff;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.quiz-option {
+    background: rgba(255, 255, 255, 0.9);
+    color: #b30047;
+    border: none;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.quiz-option:hover {
+    background: #ffb6c1;
+    color: #fff;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+}
+
 /* Page Hiding Logic */
 .page { display: none; }
 .active { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+
+/* ---- HAPPY BIRTHDAY PAGE STYLES ---- */
+.hbd-wrapper {
+    padding: 30px;
+    max-width: 800px;
+    text-align: center;
+    z-index: 10;
+}
+
+.hbd-title {
+    font-family: 'Kalam', cursive;
+    font-size: 90px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 2px 5px 15px rgba(0,0,0,0.5);
+    margin-bottom: 25px;
+    animation: floating 3s ease-in-out infinite;
+}
+
+.hbd-paragraph {
+    font-size: 24px;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    font-weight: 400;
+    text-shadow: 1px 2px 8px rgba(0,0,0,0.4);
+}
+
+@keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes zoomFade {
+    0% { opacity: 0; transform: scale(0.3); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.animate-zoom-fade {
+    animation: zoomFade 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
@@ -176,4 +294,53 @@ h2 {
         font-size: 18px;
         padding: 12px 30px;
     }
+    .hbd-title {
+        font-size: 50px;
+    }
+    .hbd-paragraph {
+        font-size: 18px;
+    }
+}
+
+
+
+
+/* ---- PAGE 5: HAPPY BIRTHDAY STYLES ---- */
+.hbd-container {
+    /* Entrance me neeche se aayega, fir floating chalu ho jayegi */
+    animation: slideInUp 1.5s ease-out forwards, floating 3.5s ease-in-out infinite 1.5s;
+    padding: 20px;
+    text-align: center;
+}
+
+.hbd-title {
+    font-family: 'Kalam', cursive; /* Stylish Handwritten Font */
+    font-size: 90px;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 2px 5px 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hbd-paragraph {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #fdfdfd;
+    line-height: 1.8;
+    text-shadow: 1px 2px 5px rgba(0,0,0,0.6);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Continuous Halka sa Floating Animation */
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); } /* 15px upar jayega */
+    100% { transform: translateY(0px); }
+}
+
+/* Mobile responsive ke liye font size thoda set karna */
+@media (max-width: 600px) {
+    .hbd-title { font-size: 60px; }
+    .hbd-paragraph { font-size: 16px; }
 }
