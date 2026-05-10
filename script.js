@@ -1,5 +1,5 @@
 let currentPasscode = "";
-const correctPasscode = "2442"; 
+const correctPasscode = "1812"; 
 const videoElement = document.getElementById('bg-video');
 
 const pageVideos = {
